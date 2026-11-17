@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
 import "./App.css";
-
-import type { ToolType, VoltageType, NetworkStats } from "./types";
-
+import type { ToolType, VoltageType, NetworkStats, MapObjectData, PowerLineData, } from "./types";
 import GridWorkspace from "./components/GridWorkspace";
 import ObjectPanel from "./components/ObjectPanel";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import InfoPanel from "./components/InfoPanel";
 
 function App() {
-  const [selectedTool, setSelectedTool] = useState<ToolType>("select");
+  const [selectedTool, setSelectedTool] =
+    useState<ToolType>("select");
 
   const [selectedVoltage, setSelectedVoltage] =
     useState<VoltageType>("low");
@@ -21,9 +21,39 @@ function App() {
     transformers: 0,
   });
 
-  const handleStatsChange = useCallback((newStats: NetworkStats) => {
-    setStats(newStats);
+  const [selectedInfoObject, setSelectedInfoObject] =
+    useState<MapObjectData | null>(null);
+
+  const [selectedInfoLines, setSelectedInfoLines] =
+    useState<PowerLineData[]>([]);
+
+  const [deleteObjectId, setDeleteObjectId] =
+    useState<string | null>(null);
+
+  const handleStatsChange = useCallback(
+    (newStats: NetworkStats) => {
+      setStats(newStats);
+    },
+    []
+  );
+
+  const handleSelectionChange = useCallback(
+    (object: MapObjectData | null, lines: PowerLineData[]) => {
+      setSelectedInfoObject(object);
+      setSelectedInfoLines(lines);
+    },
+    []
+  );
+
+  const handleDeleteComplete = useCallback(() => {
+    setDeleteObjectId(null);
   }, []);
+
+  const handleDeleteObject = () => {
+    if (selectedInfoObject) {
+      setDeleteObjectId(selectedInfoObject.id);
+    }
+  };
 
   return (
     <div className="app">
@@ -46,10 +76,19 @@ function App() {
             selectedTool={selectedTool}
             selectedVoltage={selectedVoltage}
             onStatsChange={handleStatsChange}
+            onSelectionChange={handleSelectionChange}
+            deleteObjectId={deleteObjectId}
+            onDeleteComplete={handleDeleteComplete}
           />
         </section>
 
-        <aside className="right-panel"></aside>
+        <aside className="right-panel">
+          <InfoPanel
+            object={selectedInfoObject}
+            lines={selectedInfoLines}
+            onDelete={handleDeleteObject}
+          />
+        </aside>
       </main>
 
       <footer className="bottom-panel">

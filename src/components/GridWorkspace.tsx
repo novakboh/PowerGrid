@@ -8,9 +8,15 @@ type Props = {
   selectedTool: ToolType;
   selectedVoltage: VoltageType;
   onStatsChange: (stats: NetworkStats) => void;
+  onSelectionChange: (
+    object: MapObjectData | null,
+    lines: PowerLineData[]
+  ) => void;
+  deleteObjectId: string | null;
+  onDeleteComplete: () => void;
 };
 
-function GridWorkspace({ selectedTool, selectedVoltage, onStatsChange }: Props) {
+function GridWorkspace({ selectedTool, selectedVoltage, onStatsChange, onSelectionChange, deleteObjectId, onDeleteComplete, }: Props) {
   const [view, setView] = useState({
     scale: 1,
     x: 0,
@@ -50,6 +56,48 @@ function GridWorkspace({ selectedTool, selectedVoltage, onStatsChange }: Props) 
       ).length,
     });
   }, [objects, lines, onStatsChange]);
+
+  useEffect(() => {
+    const selected = objects.find(
+      (obj) =>
+        obj.id === selectedObject &&
+        (obj.type === "pole" || obj.type === "transformer")
+    );
+
+    if (!selected) {
+      onSelectionChange(null, []);
+      return;
+    }
+
+    const connectedLines = lines.filter(
+      (line) =>
+        line.startId === selected.id ||
+        line.endId === selected.id
+    );
+
+    onSelectionChange(selected, connectedLines);
+  }, [objects, lines, selectedObject, onSelectionChange]);
+
+  useEffect(() => {
+    if (!deleteObjectId) return;
+
+    setObjects((prev) =>
+      prev.filter((obj) => obj.id !== deleteObjectId)
+    );
+
+    setLines((prev) =>
+      prev.filter(
+        (line) =>
+          line.startId !== deleteObjectId &&
+          line.endId !== deleteObjectId
+      )
+    );
+
+    setSelectedObject(null);
+    setLineStart(null);
+
+    onDeleteComplete();
+  }, [deleteObjectId, onDeleteComplete]);
 
   const dragStart = useRef<{ x: number; y: number } | null>(null);
   const dragObject = useRef<string | null>(null);
