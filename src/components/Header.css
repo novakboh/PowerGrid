@@ -1,0 +1,89 @@
+.header-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  gap: 20px;
+  color: #E5EAF0;
+  white-space: nowrap;
+}
+
+.header-brand,
+.header-info,
+.header-stat,
+.header-current,
+.header-action {
+  display: flex;
+  align-items: center;
+}
+
+.header-brand {
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.header-brand > img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.brand-divider {
+  color: #526176;
+  font-size: 22px;
+}
+
+.brand-subtitle {
+  color: #AAB8C9;
+  font-size: 15px;
+}
+
+.header-info {
+  gap: 22px;
+}
+
+.header-stat,
+.header-current {
+  gap: 7px;
+  font-size: 14px;
+}
+
+.header-stat img,
+.header-current img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.header-current .enabled-icon {
+  width: 17px;
+  height: 17px;
+}
+
+.header-action {
+  gap: 7px;
+  padding: 9px 12px;
+  background: #26364A;
+  border: 1px solid #35465C;
+  border-radius: 6px;
+  color: #E5EAF0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.header-action:hover {
+  background: #30445D;
+}
+
+.header-action img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}

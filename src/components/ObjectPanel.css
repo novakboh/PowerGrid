@@ -1,0 +1,107 @@
+.object-panel {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: #192535;
+}
+
+.panel-header {
+  height: 55px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.panel-header img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.panel-divider {
+  height: 1px;
+  flex-shrink: 0;
+  background: #2D3B4F;
+  margin: 3px 0;
+}
+
+.panel-button {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 10px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.panel-button img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.panel-button span {
+  white-space: nowrap;
+}
+
+.panel-button:hover {
+  background: #243449;
+}
+
+.panel-button.active {
+  border-color: #55B9F3;
+  background: #243449;
+}
+
+.voltage-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+}
+
+.voltage-title {
+  color: #cbd5e1;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.voltage-button {
+  padding: 8px;
+  border: 1px solid #2D3B4F;
+  border-radius: 5px;
+  background: #121C2B;
+  color: #cbd5e1;
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+}
+
+.voltage-button:hover {
+  background: #26364a;
+}
+
+.voltage-button.active {
+  background: #30445d;
+  border-color: #55B9F3;
+  color: white;
+}
